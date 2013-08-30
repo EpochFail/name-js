@@ -12,7 +12,7 @@ button.addEventListener("click", function() {
     }
   };
 
-  xhr.open('GET', 'http://tranquil-lowlands-2993.herokuapp.com/api/word', true);
+  xhr.open('GET', 'https://tranquil-lowlands-2993.herokuapp.com/api/word', true);
   xhr.send(null);
 }, false);
 
