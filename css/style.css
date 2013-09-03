@@ -15,7 +15,7 @@ h1 {
   text-align: center;
 }
 
-#button {
+.button {
   margin: auto;
   width: 300px;
   height: 70px;
@@ -27,11 +27,11 @@ h1 {
   cursor: pointer;
 }
 
-#button:hover {
+.button:hover {
   background-color: #0077FF;
 }
 
-#name {
+#name, #rating {
   margin: 100px auto 0 auto;
   text-align: center;
   font-size: 3em;
