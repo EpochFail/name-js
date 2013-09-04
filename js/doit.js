@@ -6,6 +6,8 @@ name_button.addEventListener("click", function() {
   var name = document.getElementById("name");
   var rating = document.getElementById("rating");
 
+  var votes = document.getElementById("votes");
+
   var xhr = new XMLHttpRequest();
   
   xhr.onreadystatechange = function() {
@@ -16,6 +18,8 @@ name_button.addEventListener("click", function() {
       curr_rating = obj.rating;
       name.innerHTML = curr_word + ".js";
       rating.innerHTML = curr_rating;;
+    
+      votes.style.visibility = "visible";
     }
   };
 

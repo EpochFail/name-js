@@ -4,22 +4,33 @@
   <head>
     <title>Name Your JS</title>
 
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
-    <link rel="StyleSheet" href="css/reset.css" type="text/css" media="screen"> 
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Vollkorn:700italic' rel='stylesheet' type='text/css'>
+		<link rel="StyleSheet" href="css/reset.css" type="text/css" media="screen"> 
+    <link rel="StyleSheet" href="css/skeleton.css" type="text/css" media="screen"> 
     <link rel="StyleSheet" href="css/style.css" type="text/css" media="screen">
   </head>
 
   <body>
+    <header class="header">
+      <div class="container sixteen columns">
+				<h1>{ wut }.js</h1>
+      </div>
+    </header>
+
     <div class="container">
-      <h1>Trouble naming your new JavaScript library?</h1>
+      <h2>Trouble naming your new JavaScript library?</h2>
 
       <div id="button" class="button">Name That Thing</div> 
-      <div id="name"></div>
-      <div id="rating"></div>
 
-      <div id="up" class="button">Up</div><br />
-      <div id="down" class="button">Down</div>
-    </div>
+			<div id="name"></div>
+
+			<div id="votes">
+				<div class="vote-arrow"><img id="up" src="img/upvote.png" /></div>
+				<div id="rating"></div>
+				<div class="vote-arrow"><img id="down" src="img/downvote.png" /></div>
+			</div>
+		</div>
 
     <script type="text/javascript" src="js/doit.js"></script>
   </body>
