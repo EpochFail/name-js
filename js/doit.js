@@ -1,59 +1,46 @@
-var name_button = document.getElementById("button");
+var root_url = "http://localhost:5555";
+
 var curr_word = "";
 var curr_rating = 0;
 
-name_button.addEventListener("click", function() {
-  var name = document.getElementById("name");
-  var rating = document.getElementById("rating");
+var rating_div;
+var name_div;
 
-  var votes = document.getElementById("votes");
+$(function() {
+  $("#button").click(displayJson);
+	$(document).keydown(function(e) { if (e.keyCode == 32) displayJson(); });
 
-  var xhr = new XMLHttpRequest();
-  
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4) {
-      obj = JSON.parse(xhr.responseText);
-      
-      curr_word = obj.word;
-      curr_rating = obj.rating;
-      name.innerHTML = curr_word + ".js";
-      rating.innerHTML = curr_rating;;
+  $("#up").click({direction: "up"}, vote);
+  $("#down").click({direction: "down"}, vote);
+
+  rating_div = $("#rating");
+  name_div = $("#name");
+});
+
+function displayJson() {
+  $.getJSON(root_url + "/api/word", function(data) {
+    curr_word = data.word;
+    curr_rating = data.rating;
     
-      votes.style.visibility = "visible";
-    }
-  };
+    name_div.html(data.word + ".js");
+    rating_div.html(curr_rating);
+    
+    votes.style.visibility = "visible";
+  });
+}
 
-  xhr.open('GET', 'http://localhost:5555/api/word', true);
-  xhr.send(null);
-}, false);
-
-var up_button = document.getElementById("up");
-var down_button = document.getElementById("down");
-
-up_button.addEventListener("click", function() {
+function vote(event) {
   if (curr_word === "") return;
- 
-  curr_rating++;
-  rating.innerHTML = curr_rating;
 
-  var xhr = new XMLHttpRequest();
-  var url = "http://localhost:5555/api/vote/" + curr_word + "/up";
+  var direction = event.data.direction;
   
-  xhr.open('GET', url, true);
-  xhr.send(null);
-  
-}, false);
+  if (direction === "up") curr_rating++;
+  else if (direction === "down") curr_rating--;
 
-down_button.addEventListener("click", function() {
-  if (curr_word === "") return;
-  
-  curr_rating--;
-  rating.innerHTML = curr_rating;
-  
-  var xhr = new XMLHttpRequest();
-  var url = "http://localhost:5555/api/vote/" + curr_word + "/down";
-  
-  xhr.open('GET', url, true);
-  xhr.send(null);
-}, false);
+  rating_div.html(curr_rating);
 
+  var _url = root_url + "/api/vote/" + curr_word + "/" + direction;
+  $.ajax({
+    url: _url
+  });
+}
