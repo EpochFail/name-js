@@ -4,7 +4,7 @@
   <head>
     <title>Name Your JS</title>
 
-		<link href='http://fonts.googleapis.com/css?family=Vollkorn:700italic|Droid+Sans' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Vollkorn:700italic,400|Droid+Sans' rel='stylesheet' type='text/css'>
 		<link rel="StyleSheet" href="css/reset.css" type="text/css" media="screen"> 
     <link rel="StyleSheet" href="css/skeleton.css" type="text/css" media="screen"> 
     <link rel="StyleSheet" href="css/style.css" type="text/css" media="screen">
@@ -28,6 +28,27 @@
 				<div class="vote-arrow"><img id="up" src="img/upvote.png" /></div>
 				<div id="rating"></div>
 				<div class="vote-arrow"><img id="down" src="img/downvote.png" /></div>
+			</div>
+
+			<div class="one-third column row">
+				<h3 class="stat-header">Last</h3>
+				<div class="stat-column">
+					<ol id="history"></ol>
+				</div>
+			</div>
+
+			<div class="one-third column row">
+				<h3 class="stat-header">Best</h3>
+				<div class="stat-column">
+					<ol id="top10"></ol>
+				</div>
+			</div>
+
+			<div class="one-third column row">
+				<h3 class="stat-header">Worst</h3>
+				<div class="stat-column">
+					<ol id="bottom10"></ol>
+				</div>
 			</div>
 		</div>
 

@@ -12,6 +12,28 @@ html, body {
 	border-bottom: 4px solid #bbb;
 }
 
+.stat-column {
+  background-color: #fff;
+  width: 80%;
+  margin: auto;
+  border: 1px solid #bbb;
+}
+
+.stat-column ol li {
+  padding: 8px 8px 8px 8px;
+}
+
+.stat-column ol li:nth-child(odd) {
+  background-color: #eee;
+}
+
+.stat-header {
+  width: 80%;
+  margin: auto;
+  font-size: 1.5em;
+  font-family: 'Vollkorn';
+}
+
 h1 {
 	font-family: 'Vollkorn';
   font-size: 3em;
@@ -47,6 +69,7 @@ h2 {
 
 #votes {
 	visibility: hidden;
+  margin: 0 0 40px 0;
 }
 
 .button:hover {

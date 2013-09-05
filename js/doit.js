@@ -9,6 +9,9 @@ var name_div;
 
 var upvote_button;
 var downvote_button;
+var history_div;
+var top10_div;
+var bottom10_div;
 
 $(function() {
   $("#button").click(generateName);
@@ -24,15 +27,22 @@ $(function() {
 
   rating_div = $("#rating");
   name_div = $("#name");
+	history_div = $("#history");
+	top10_div = $("#top10");
+	bottom10_div = $("#bottom10");
+
+	buildStats();
+
+	setInterval(buildStats, 30000); 
 });
 
 function generateName() {
   $.getJSON(root_url + "/api/word", function(data) {
-    curr_word = data.word;
-    starting_rating = data.rating;
+    curr_word = data.Word;
+    starting_rating = data.Rating;
     session_rating = starting_rating;
     
-    name_div.html(data.word + ".js");
+    name_div.html(curr_word	+ ".js");
     rating_div.html(starting_rating);
     
     votes.style.visibility = "visible";
@@ -40,8 +50,29 @@ function generateName() {
 	});
 }
 
-var user_voted = false;
-var user_voted_direction;
+function buildStats() {
+	$.getJSON(root_url + "/api/stats", function(data) {
+		var history = data.History;
+		var top10 = data.Top10;
+		var bottom10 = data.Bottom10;
+
+		history_div.html("");
+		top10_div.html("");
+		bottom10_div.html("");		
+
+		for (var i = 0; i < history.length; i++) {
+			history_div.append("<li>" + history[i].Rating + " " + history[i].Word + ".js</li>");
+		}
+		
+		for (var i = 0; i < top10.length; i++) {
+			top10_div.append("<li>" + top10[i].Rating + " " + top10[i].Word + ".js</li>");
+		}
+	
+		for (var i = 0; i < bottom10.length; i++) {
+			bottom10_div.append("<li>" + bottom10[i].Rating + " " + bottom10[i].Word + ".js</li>");
+		}	
+	});
+}
 
 function vote(event) {
   if (curr_word === "") return;
