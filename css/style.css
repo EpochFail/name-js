@@ -34,6 +34,11 @@ html, body {
   font-family: 'Vollkorn';
 }
 
+.loader {
+  margin-left: 5px;
+  display: none;
+}
+
 h1 {
 	font-family: 'Vollkorn';
   font-size: 3em;

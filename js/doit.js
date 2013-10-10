@@ -40,9 +40,13 @@ namejs.app = {
 		$(document).keyup(function(e) { if (e.keyCode == 38) alias.upvote_button.click(); });
 		$(document).keyup(function(e) { if (e.keyCode == 40) alias.downvote_button.click(); });
 		
-		alias.buildStats();
+		alias.buildHistory();
+		alias.buildTop10();
+		alias.buildBottom10();
 
-		setInterval(alias.buildStats, 30000); 
+		setInterval(alias.buildHistory, 30000);
+    setInterval(alias.buildTop10, 60000);
+    setInterval(alias.buildBottom10, 60000);
 	},
 
 	generateName: function() {
@@ -97,28 +101,48 @@ namejs.app = {
 	  namejs.app.downvote_button.attr("src", "img/downvote.png");
   },
 
-  buildStats: function() {
-	  var alias = namejs.app;
-    $.getJSON(alias.root_url + "/api/stats", function(data) {
-		  var history = data.History;
-		  var top10 = data.Top10;
-		  var bottom10 = data.Bottom10;
-
+  buildHistory: function() {
+    var alias = namejs.app;
+    var $loader = $("#last-loader");
+   
+    $loader.show();
+    $.getJSON(alias.root_url + "/api/history", function(data) {
 		  alias.history_div.html("");
-		  alias.top10_div.html("");
-		  alias.bottom10_div.html("");		
 
-		  for (var i = 0; i < history.length; i++) {
-			  alias.history_div.append("<li>" + history[i].Rating + " " + history[i].Word + ".js</li>");
+		  for (var i = 0; i < data.length; i++) {
+			  alias.history_div.append("<li>" + data[i].Rating + " " + data[i].Word + ".js</li>");
 		  }
-		
-		  for (var i = 0; i < top10.length; i++) {
-			  alias.top10_div.append("<li>" + top10[i].Rating + " " + top10[i].Word + ".js</li>");
+      $loader.hide();
+    });
+  },
+  
+  buildTop10: function() {
+    var alias = namejs.app;
+    var $loader = $("#best-loader");
+
+    $loader.show();
+    $.getJSON(alias.root_url + "/api/top10", function(data) {
+		  alias.top10_div.html("");
+
+		  for (var i = 0; i < data.length; i++) {
+			  alias.top10_div.append("<li>" + data[i].Rating + " " + data[i].Word + ".js</li>");
 		  }
-	
-		  for (var i = 0; i < bottom10.length; i++) {
-			  alias.bottom10_div.append("<li>" + bottom10[i].Rating + " " + bottom10[i].Word + ".js</li>");
-		  }	
-	  });
+      $loader.hide();
+    });
+  },
+  
+  buildBottom10: function() {
+    var alias = namejs.app;
+    var $loader = $("#worst-loader");
+
+    $loader.show();
+    $.getJSON(alias.root_url + "/api/bottom10", function(data) {
+		  alias.bottom10_div.html("");
+
+		  for (var i = 0; i < data.length; i++) {
+			  alias.bottom10_div.append("<li>" + data[i].Rating + " " + data[i].Word + ".js</li>");
+		  }
+      $loader.hide();
+    });
   }
 }
