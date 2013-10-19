@@ -14,7 +14,7 @@ html, body {
 
 .stat-column {
   background-color: #fff;
-  width: 80%;
+  width: 90%;
   margin: auto;
   border: 1px solid #bbb;
 }
@@ -28,7 +28,7 @@ html, body {
 }
 
 .stat-header {
-  width: 80%;
+  width: 90%;
   margin: auto;
   font-size: 1.5em;
   font-family: 'Vollkorn';

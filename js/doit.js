@@ -18,6 +18,7 @@ namejs.app = {
   history_div: null,
   top10_div: null,
   bottom10_div: null,
+  random10_div: null,
 
 	init: function() {
     var alias = namejs.app;
@@ -30,7 +31,8 @@ namejs.app = {
 			history_div = $("#history");
 			top10_div = $("#top10");
 			bottom10_div = $("#bottom10");
-		};
+		  random10_div = $("#random10");
+    };
 
 		$("#button").click(alias.generateName);
 		$(document).keyup(function(e) { if (e.keyCode == 32 || e.keyCode == 13) alias.generateName(); });
@@ -39,14 +41,16 @@ namejs.app = {
 		alias.downvote_button.click({direction: "down"}, alias.vote);
 		$(document).keyup(function(e) { if (e.keyCode == 38) alias.upvote_button.click(); });
 		$(document).keyup(function(e) { if (e.keyCode == 40) alias.downvote_button.click(); });
-		
+
 		alias.buildHistory();
 		alias.buildTop10();
 		alias.buildBottom10();
+    alias.buildRandom10();
 
-		setInterval(alias.buildHistory, 30000);
+		setInterval(alias.buildHistory, 40000);
     setInterval(alias.buildTop10, 60000);
     setInterval(alias.buildBottom10, 60000);
+    setInterval(alias.buildRandom10, 40000);
 	},
 
 	generateName: function() {
@@ -103,46 +107,42 @@ namejs.app = {
 
   buildHistory: function() {
     var alias = namejs.app;
-    var $loader = $("#last-loader");
-   
-    $loader.show();
-    $.getJSON(alias.root_url + "/api/history", function(data) {
-		  alias.history_div.html("");
-
-		  for (var i = 0; i < data.length; i++) {
-			  alias.history_div.append("<li>" + data[i].Rating + " " + data[i].Word + ".js</li>");
-		  }
-      $loader.hide();
-    });
+    var dataUrl = alias.root_url + "/api/history";
+		
+		alias.buildColumn($("#last-loader"), alias.history_div, dataUrl);
   },
   
   buildTop10: function() {
     var alias = namejs.app;
-    var $loader = $("#best-loader");
-
-    $loader.show();
-    $.getJSON(alias.root_url + "/api/top10", function(data) {
-		  alias.top10_div.html("");
-
-		  for (var i = 0; i < data.length; i++) {
-			  alias.top10_div.append("<li>" + data[i].Rating + " " + data[i].Word + ".js</li>");
-		  }
-      $loader.hide();
-    });
+    var dataUrl = alias.root_url + "/api/top10";
+		
+		alias.buildColumn($("#best-loader"), alias.top10_div, dataUrl);
   },
   
   buildBottom10: function() {
     var alias = namejs.app;
-    var $loader = $("#worst-loader");
+    var dataUrl = alias.root_url + "/api/bottom10";
+		
+		alias.buildColumn($("#worst-loader"), alias.bottom10_div, dataUrl);
+  },
+  
+  buildRandom10: function() {
+    var alias = namejs.app;
+    var dataUrl = alias.root_url + "/api/random10";
+    
+		alias.buildColumn($("#random-loader"), alias.random10_div, dataUrl);
+  },
 
-    $loader.show();
-    $.getJSON(alias.root_url + "/api/bottom10", function(data) {
-		  alias.bottom10_div.html("");
+  buildColumn: function(loaderEle, columnEle, dataUrl) {
+		loaderEle.show();
+    
+    $.getJSON(dataUrl, function(data) {
+		  columnEle.html("");
 
 		  for (var i = 0; i < data.length; i++) {
-			  alias.bottom10_div.append("<li>" + data[i].Rating + " " + data[i].Word + ".js</li>");
+			  columnEle.append("<li>" + data[i].Rating + " " + data[i].Word + ".js</li>");
 		  }
-      $loader.hide();
+      loaderEle.hide();
     });
-  }
+  },
 }
