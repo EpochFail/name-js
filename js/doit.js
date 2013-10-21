@@ -35,12 +35,12 @@ namejs.app = {
     };
 
 		$("#button").click(alias.generateName);
-		$(document).keyup(function(e) { if (e.keyCode == 32 || e.keyCode == 13) alias.generateName(); });
+		$(document).keyup(function(e) { if (e.keyCode == 13) alias.generateName(); });
 		
 		alias.upvote_button.click({direction: "up"}, alias.vote);
 		alias.downvote_button.click({direction: "down"}, alias.vote);
-		$(document).keyup(function(e) { if (e.keyCode == 38) alias.upvote_button.click(); });
-		$(document).keyup(function(e) { if (e.keyCode == 40) alias.downvote_button.click(); });
+		$(document).keyup(function(e) { if (e.keyCode == 65) alias.upvote_button.click(); });
+		$(document).keyup(function(e) { if (e.keyCode == 90) alias.downvote_button.click(); });
 
 		alias.buildHistory();
 		alias.buildTop10();
