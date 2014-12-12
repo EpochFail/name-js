@@ -5,8 +5,8 @@ $(function() {
 var namejs = namejs || {};
 
 namejs.app = {
-	root_url: "http://localhost:5555",
-	curr_word: "",
+    root_url: "http://localhost:8001",
+    curr_word: "",
   starting_rating: 0,
   session_rating: 0,
 
@@ -57,8 +57,8 @@ namejs.app = {
     var alias = namejs.app;	
     $.getJSON(alias.root_url + "/api/word", function(data) {
       with(alias) {
-        curr_word = data.Word;
-        starting_rating = data.Rating;
+        curr_word = data.word;
+        starting_rating = data.rating;
 			  session_rating = alias.starting_rating;
 			
         name_div.html(alias.curr_word	+ ".js");
@@ -96,6 +96,7 @@ namejs.app = {
 
     var _url = alias.root_url + "/api/vote/" + alias.curr_word + "/" + direction;
     $.ajax({
+      type: 'POST',
       url: _url
     });
   },
@@ -140,7 +141,7 @@ namejs.app = {
 		  columnEle.html("");
 
 		  for (var i = 0; i < data.length; i++) {
-			  columnEle.append("<li>" + data[i].Rating + " " + data[i].Word + ".js</li>");
+			  columnEle.append("<li>" + data[i].rating + " " + data[i].word + ".js</li>");
 		  }
       loaderEle.hide();
     });
